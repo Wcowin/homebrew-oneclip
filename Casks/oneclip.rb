@@ -2,7 +2,7 @@ cask "oneclip" do
   version "1.2.6"
   sha256 "c4fd304a4870a555aac87c95d48cd20dbc016ecde2c1b2f712451228ead8e2e6"
 
-  url "https://github.com/Wcowin/OneClip/releases/download/v#{version}/OneClip-#{version}-apple-silicon.dmg"
+  url "https://github.com/Wcowin/OneClip/releases/download/#{version}/OneClip-#{version}-apple-silicon.dmg"
   name "OneClip"
   desc "Professional clipboard manager for macOS"
   homepage "https://oneclip.cloud/"
