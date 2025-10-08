@@ -1,6 +1,6 @@
 cask "oneclip" do
   version "1.2.7"
-  sha256 :no_check  # Gitee 不支持自动校验，使用 :no_check
+  sha256 "d30213c1ffc96b230c8461930097037abcff292d93119e39aa01f45e4f67183d"
 
   url "https://gitee.com/Wcowin/OneClip/releases/download/#{version}/OneClip-#{version}-apple-silicon.dmg"
   name "OneClip"
