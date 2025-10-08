@@ -1,15 +1,15 @@
 cask "oneclip" do
-  version "1.2.6"
-  sha256 "c4fd304a4870a555aac87c95d48cd20dbc016ecde2c1b2f712451228ead8e2e6"
+  version "1.2.7"
+  sha256 :no_check  # Gitee 不支持自动校验，使用 :no_check
 
-  url "https://github.com/Wcowin/OneClip/releases/download/#{version}/OneClip-#{version}-apple-silicon.dmg"
+  url "https://gitee.com/Wcowin/OneClip/releases/download/#{version}/OneClip-#{version}-apple-silicon.dmg"
   name "OneClip"
   desc "Professional clipboard manager for macOS"
   homepage "https://oneclip.cloud/"
 
   livecheck do
-    url :url
-    strategy :github_latest
+    url "https://gitee.com/Wcowin/OneClip/releases"
+    regex(/OneClip[._-]v?(\d+(?:\.\d+)+)[._-]apple[._-]silicon\.dmg/i)
   end
 
   depends_on macos: ">= :monterey"
