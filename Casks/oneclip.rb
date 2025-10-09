@@ -1,10 +1,10 @@
 cask "oneclip" do
   version "1.2.7"
-  sha256 :no_check  # Gitee 不支持自动校验，使用 :no_check
+  sha256 "7689c0596f0b44530a59d384cdeb133e38f6fc7767fdda416310325a12a4530c"
 
   url "https://gitee.com/Wcowin/OneClip/releases/download/#{version}/OneClip-#{version}-apple-silicon.dmg"
   name "OneClip"
-  desc "Professional clipboard manager for macOS"
+  desc "Professional clipboard manager"
   homepage "https://oneclip.cloud/"
 
   livecheck do
