@@ -14,7 +14,6 @@ cask "oneclip" do
 
   depends_on macos: ">= :monterey"
 
-
   app "OneClip.app"
 
   zap trash: [
