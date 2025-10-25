@@ -1,6 +1,6 @@
 cask "oneclip" do
-  version "1.3.0"
-  sha256 "99aee1aa61d0ec5662d6ac7a5012a1433d1bed4f107294e31823fade1090f790"
+  version "1.3.1"
+  sha256 "d8aad3a2302d7104bc9fbb32808d8b20287bd93883a92ef080c7516f90beb449"
 
   url "https://gitee.com/Wcowin/OneClip/releases/download/#{version}/OneClip-#{version}.dmg"
   name "OneClip"
@@ -13,6 +13,7 @@ cask "oneclip" do
   end
 
   depends_on macos: ">= :monterey"
+
 
   app "OneClip.app"
 
