@@ -1,8 +1,8 @@
 cask "oneclip" do
-  version "1.3.4"
-  sha256 "09bb6dca14f1c79bf7137da28e9ec3b4c6cdf24629e49af16c16e442ad5d33c3"
+  version "1.3.6"
+  sha256 "06d9c4c928b70dcc07ce25c6119899d857a0332a7e6a8c4bc39227b6efb4fac7"
 
-  url "https://gitee.com/Wcowin/OneClip/releases/download/#{version}/OneClip-#{version}.dmg"
+  url "https://gh-proxy.com/https://github.com/Wcowin/OneClip/releases/download/#{version}/OneClip-#{version}.dmg"
   name "OneClip"
   desc "Professional clipboard manager for macOS"
   homepage "https://oneclip.cloud/"
