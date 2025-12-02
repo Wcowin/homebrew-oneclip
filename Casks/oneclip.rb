@@ -1,6 +1,6 @@
 cask "oneclip" do
-  version "1.3.6"
-  sha256 "06d9c4c928b70dcc07ce25c6119899d857a0332a7e6a8c4bc39227b6efb4fac7"
+  version "1.3.8"
+  sha256 "fa41ed790e594afe5c8f46d05c66aed435555cf82d32fd7275f3eca10147719a"
 
   url "https://gh-proxy.com/https://github.com/Wcowin/OneClip/releases/download/#{version}/OneClip-#{version}.dmg"
   name "OneClip"
