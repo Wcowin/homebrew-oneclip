@@ -1,6 +1,6 @@
 cask "oneclip" do
-  version "1.3.8"
-  sha256 "fa41ed790e594afe5c8f46d05c66aed435555cf82d32fd7275f3eca10147719a"
+  version "1.3.9"
+  sha256 "cf510a054bfac05f85bb3cf5bf7607065a456e4a01b3e362bec398d296e94eb6"
 
   url "https://github.com/Wcowin/OneClip/releases/download/#{version}/OneClip-#{version}.dmg"
   name "OneClip"
@@ -14,10 +14,8 @@ cask "oneclip" do
 
   depends_on macos: ">= :monterey"
 
-  app "OneClip.app"
 
-  # 卸载时强制移除，避免升级时找不到旧版本导致失败
-  uninstall quit: "com.wcowin.OneClip"
+  app "OneClip.app"
 
   zap trash: [
     "~/Library/Application Support/OneClip",
