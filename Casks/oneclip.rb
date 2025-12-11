@@ -3,7 +3,7 @@ cask "oneclip" do
   sha256 "57b0fa677f21ccf11f6beba2837d9c860b7361584a442b4b9ee4d70ff9c9cc9c"
 
   # 使用 Gitee 国内源，确保国内用户下载稳定
-  url "https://gitee.com/Wcowin/OneClip/releases/download/v#{version}/OneClip-#{version}.dmg"
+  url "https://gitee.com/Wcowin/OneClip/releases/download/#{version}/OneClip-#{version}.dmg"
   name "OneClip"
   desc "Professional clipboard manager for macOS"
   homepage "https://oneclip.cloud/"
