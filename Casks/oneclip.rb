@@ -1,14 +1,14 @@
 cask "oneclip" do
-  version "1.4.4"
-  sha256 "5af1cd6f86adad20d18f71d098bb11ba3489e3de930ba94c9918088fc1f2d209"
+  version "1.4.5"
+  sha256 "fcdbf918a76768534ebb633d805fe13f28f8c81096e8ada39ba9abf64ab4089e"
 
-  url "https://gitee.com/Wcowin/OneClip/releases/download/#{version}/OneClip-#{version}.dmg"
+  url "https://github.com/Wcowin/OneClip/releases/download/#{version}/OneClip-#{version}.dmg"
   name "OneClip"
   desc "Professional clipboard manager for macOS"
   homepage "https://oneclip.cloud/"
 
   livecheck do
-    url "https://gitee.com/Wcowin/OneClip/releases"
+    url "https://github.com/Wcowin/OneClip/releases"
     regex(/OneClip[._-]v?(\d+(?:\.\d+)+)\.dmg/i)
   end
 
