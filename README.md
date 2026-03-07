@@ -4,7 +4,7 @@
 
 ```bash
 # 下载并运行安装脚本（推荐）
-curl -fsSL https://gitee.com/Wcowin/homebrew-oneclip/raw/master/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Wcowin/homebrew-oneclip/master/install.sh | bash
 ```
 
 ## 功能列表
@@ -146,4 +146,5 @@ brew install --cask oneclip
 
 - 官网: https://oneclip.cloud
 - 反馈: vip@oneclip.cloud
-- Gitee: https://gitee.com/Wcowin/OneClip
+- GitHub: https://github.com/Wcowin/OneClip
+- Homebrew Tap: https://github.com/Wcowin/homebrew-oneclip

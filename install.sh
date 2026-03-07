@@ -142,6 +142,7 @@ check_homebrew() {
 get_remote_version() {
     print_step "获取最新版本..."
     
+    # 从 GitHub 获取版本信息
     REMOTE_VERSION=$(curl -sL --connect-timeout 5 "$GITHUB_API/homebrew-oneclip/contents/Casks/oneclip.rb" 2>/dev/null | \
         python3 -c "import json,sys,base64; d=json.load(sys.stdin); c=base64.b64decode(d['content']).decode(); print([l.split('\"')[1] for l in c.split('\n') if 'version' in l][0])" 2>/dev/null || echo "")
     

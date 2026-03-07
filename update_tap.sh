@@ -23,7 +23,7 @@ cd "$TEMP_DIR"
 
 # 克隆仓库
 echo "📥 克隆 homebrew-oneclip 仓库..."
-git clone https://gitee.com/Wcowin/homebrew-oneclip.git .
+git clone https://github.com/Wcowin/homebrew-oneclip.git .
 
 # 复制更新的 Cask 文件
 echo "📋 更新 Cask 文件..."
@@ -45,7 +45,7 @@ else
 - 更新 SHA256 校验和
 - 自动化发布脚本生成"
     
-    echo "🚀 推送到 Gitee..."
+    echo "🚀 推送到 GitHub..."
     
     # 尝试推送，如果失败则先拉取再推送
     if ! git push origin master 2>/dev/null; then

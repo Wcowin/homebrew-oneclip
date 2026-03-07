@@ -127,11 +127,11 @@ EOF
 echo -e "${GREEN}✅ Cask 文件已更新: $CASK_FILE${NC}"
 echo ""
 
-# 步骤 5: 推送到 Gitee
-echo -e "${YELLOW}📋 步骤 5/5: 推送到 Gitee${NC}"
+# 步骤 5: 推送到 GitHub
+echo -e "${YELLOW}📋 步骤 5/5: 推送到 GitHub${NC}"
 
 # 检查是否需要推送
-read -p "是否推送到 Gitee homebrew-oneclip 仓库？(y/n) " -n 1 -r
+read -p "是否推送到 GitHub homebrew-oneclip 仓库？(y/n) " -n 1 -r
 echo ""
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
