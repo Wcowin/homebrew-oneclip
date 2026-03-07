@@ -33,6 +33,42 @@ brew update
 brew upgrade --cask oneclip
 ```
 
+## 从 Gitee 迁移到 GitHub（老用户必读）
+
+如果你之前通过 Gitee tap 安装了 OneClip，请按以下步骤切换到 GitHub 源：
+
+### 方法一：自动切换（推荐）
+```bash
+# 移除旧的 Gitee tap
+brew untap wcowin/oneclip
+
+# 重新安装（会自动添加 GitHub tap 并升级到最新版本）
+brew install --cask wcowin/oneclip/oneclip
+```
+
+### 方法二：手动切换
+```bash
+# 1. 移除旧的 Gitee tap
+brew untap wcowin/oneclip
+
+# 2. 添加新的 GitHub tap
+brew tap wcowin/oneclip
+
+# 3. 升级到最新版本
+brew upgrade --cask oneclip
+```
+
+### 验证迁移成功
+```bash
+# 查看 tap 源地址（应该显示 GitHub）
+brew tap-info wcowin/oneclip
+
+# 查看当前版本
+brew info --cask oneclip
+```
+
+> **注意**：迁移过程不会影响你的剪贴板数据和设置，所有用户数据都会保留。
+
 ## 🗑️ 卸载
 
 ```bash
@@ -64,12 +100,12 @@ OneClip 是一款专为 macOS 打造的专业级剪贴板管理工具，采用 1
 
 ## 🔗 相关链接
 
-- **🏠 官方网站**: [https://oneclip.cloud](https://oneclip.cloud/)
-- **📦 源码仓库**: [https://github.com/Wcowin/OneClip](https://github.com/Wcowin/OneClip)
-- **📥 直接下载**: [GitHub Releases](https://github.com/Wcowin/OneClip/releases)
-- **💬 QQ 群**: [1060157293](https://qm.qq.com/q/ckSQ6MXgLm)
+- ** 官方网站**: [https://oneclip.cloud](https://oneclip.cloud/)
+- ** 源码仓库**: [https://github.com/Wcowin/OneClip](https://github.com/Wcowin/OneClip)
+- ** 直接下载**: [GitHub Releases](https://github.com/Wcowin/OneClip/releases)
+- ** QQ 群**: [1060157293](https://qm.qq.com/q/ckSQ6MXgLm)
 
-## 🐛 问题反馈
+## 问题反馈
 
 如果在使用 Homebrew 安装过程中遇到问题：
 
@@ -107,5 +143,5 @@ brew list --cask | grep oneclip
 
 <div align="center">
   <p><strong>OneClip - 让剪贴板管理更简单</strong></p>
-  <p>© 2025 Wcowin. All rights reserved.</p>
+  <p>© 2026 Wcowin. All rights reserved.</p>
 </div>
