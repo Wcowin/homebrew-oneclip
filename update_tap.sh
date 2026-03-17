@@ -48,11 +48,11 @@ else
     echo "🚀 推送到 GitHub..."
     
     # 尝试推送，如果失败则先拉取再推送
-    if ! git push origin master 2>/dev/null; then
+    if ! git push origin main 2>/dev/null; then
         echo "⚠️  推送失败，尝试拉取远程更改..."
         
         # 拉取并合并
-        git pull origin master --no-rebase
+        git pull origin main --no-rebase
         
         # 如果有冲突，使用我们的版本
         if git diff --name-only --diff-filter=U | grep -q "Casks/oneclip.rb"; then
@@ -63,7 +63,7 @@ else
         fi
         
         # 重新推送
-        git push origin master
+        git push origin main
     fi
     
     echo "✅ 更新完成！"
