@@ -1,6 +1,6 @@
 cask "oneclip" do
-  version "1.5.9"
-  sha256 "7422caf0df15b70cda497e1ac65e993387bf2f07fb70412aa4514ef76eff9ebd"
+  version "1.6.0"
+  sha256 "0c85830b552855abbbdc199b2946eaa6e6cc36cea2e0146673b99d85ba368d6a"
 
   url "https://gitee.com/Wcowin/OneClip/releases/download/#{version}/OneClip-#{version}.dmg"
   name "OneClip"
@@ -12,7 +12,7 @@ cask "oneclip" do
     regex(/OneClip[._-]v?(\d+(?:\.\d+)+)\.dmg/i)
   end
 
-  depends_on macos: :monterey
+  depends_on macos: ">= :monterey"
 
 
   app "OneClip.app"
