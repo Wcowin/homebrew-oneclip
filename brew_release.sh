@@ -108,7 +108,7 @@ cask "oneclip" do
     regex($LIVECHECK_REGEX)
   end
 
-  depends_on macos: ">= :monterey"
+  depends_on macos: :monterey
 $ARCH_DEPENDS
 
   app "OneClip.app"
