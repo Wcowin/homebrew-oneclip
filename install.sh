@@ -4,7 +4,7 @@
 # OneClip Homebrew 安装/诊断/维护脚本
 # 
 # 用法: 
-#   curl -fsSL https://raw.githubusercontent.com/Wcowin/homebrew-oneclip/master/install.sh | bash
+#   curl -fsSL https://gitee.com/Wcowin/homebrew-oneclip/raw/master/install.sh | bash
 #   或者: ./install.sh
 #
 # 功能:
@@ -25,8 +25,8 @@ set -e
 TAP_NAME="wcowin/oneclip"
 CASK_NAME="oneclip"
 APP_NAME="OneClip"
-GITHUB_API="https://api.github.com/repos/Wcowin"
-GITHUB_RAW="https://github.com/Wcowin"
+GITEE_API="https://gitee.com/api/v5/repos/Wcowin"
+GITEE_RAW="https://gitee.com/Wcowin"
 SUPPORT_EMAIL="vip@oneclip.cloud"
 WEBSITE="https://oneclip.cloud"
 
@@ -142,8 +142,8 @@ check_homebrew() {
 get_remote_version() {
     print_step "获取最新版本..."
     
-    # 从 GitHub 获取版本信息
-    REMOTE_VERSION=$(curl -sL --connect-timeout 5 "$GITHUB_API/homebrew-oneclip/contents/Casks/oneclip.rb" 2>/dev/null | \
+    # 从 Gitee 获取版本信息
+    REMOTE_VERSION=$(curl -sL --connect-timeout 5 "$GITEE_API/homebrew-oneclip/contents/Casks/oneclip.rb" 2>/dev/null | \
         python3 -c "import json,sys,base64; d=json.load(sys.stdin); c=base64.b64decode(d['content']).decode(); print([l.split('\"')[1] for l in c.split('\n') if 'version' in l][0])" 2>/dev/null || echo "")
     
     if [[ -z "$REMOTE_VERSION" ]]; then
@@ -252,17 +252,17 @@ check_app_data() {
 test_network() {
     print_step "测试网络连接..."
     
-    # 测试 GitHub
-    if curl -sL --connect-timeout 5 "https://github.com" > /dev/null 2>&1; then
-        print_success "GitHub 连接正常"
+    # 测试 Gitee
+    if curl -sL --connect-timeout 5 "https://gitee.com" > /dev/null 2>&1; then
+        print_success "Gitee 连接正常"
     else
-        print_error "GitHub 连接失败"
-        ISSUES+=("github_unreachable")
+        print_error "Gitee 连接失败"
+        ISSUES+=("gitee_unreachable")
     fi
     
     # 测试下载地址
     if [[ -n "$REMOTE_VERSION" ]]; then
-        DOWNLOAD_URL="$GITHUB_RAW/OneClip/releases/download/$REMOTE_VERSION/OneClip-$REMOTE_VERSION.dmg"
+        DOWNLOAD_URL="$GITEE_RAW/OneClip/releases/download/$REMOTE_VERSION/OneClip-$REMOTE_VERSION.dmg"
         HTTP_CODE=$(curl -sL --connect-timeout 5 -o /dev/null -w "%{http_code}" "$DOWNLOAD_URL" 2>/dev/null || echo "000")
         
         if [[ "$HTTP_CODE" == "302" ]] || [[ "$HTTP_CODE" == "200" ]]; then
@@ -700,8 +700,8 @@ full_diagnosis() {
                     print_error "存在旧版本缓存"
                     print_info "  解决: 选择「清理缓存」"
                     ;;
-                "github_unreachable")
-                    print_error "无法连接 GitHub"
+                "gitee_unreachable")
+                    print_error "无法连接 Gitee"
                     print_info "  解决: 检查网络或稍后重试"
                     ;;
                 "download_url_invalid")

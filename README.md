@@ -7,14 +7,14 @@
   <p>🚀 高效 · 🎨 现代 · ⚡ 流畅 · 🔒 安全</p>
 </div>
 
-OneClip 的 Homebrew tap，让您可以轻松通过命令行安装和管理 OneClip。
+OneClip 的 Homebrew tap，托管在 Gitee，国内用户安装更快速。
 
 ## 🍺 安装
 
 ### 快速安装
 ```bash
-# 添加 tap
-brew tap wcowin/oneclip
+# 添加 tap（Gitee 源）
+brew tap wcowin/oneclip https://gitee.com/Wcowin/homebrew-oneclip
 
 # 安装 OneClip
 brew install --cask oneclip
@@ -33,26 +33,27 @@ brew update
 brew upgrade --cask oneclip
 ```
 
-## 从 Gitee 迁移到 GitHub（老用户必读）
+## 从 GitHub 迁移到 Gitee（老用户必读）
 
-如果你之前通过 Gitee tap 安装了 OneClip，请按以下步骤切换到 GitHub 源：
+如果你之前通过 GitHub tap 安装了 OneClip，请按以下步骤切换到 Gitee 源：
 
 ### 方法一：自动切换（推荐）
 ```bash
-# 移除旧的 Gitee tap
+# 移除旧的 GitHub tap
 brew untap wcowin/oneclip
 
-# 重新安装（会自动添加 GitHub tap 并升级到最新版本）
+# 重新添加 Gitee tap 并安装
+brew tap wcowin/oneclip https://gitee.com/Wcowin/homebrew-oneclip
 brew install --cask wcowin/oneclip/oneclip
 ```
 
 ### 方法二：手动切换
 ```bash
-# 1. 移除旧的 Gitee tap
+# 1. 移除旧的 GitHub tap
 brew untap wcowin/oneclip
 
-# 2. 添加新的 GitHub tap
-brew tap wcowin/oneclip
+# 2. 添加新的 Gitee tap
+brew tap wcowin/oneclip https://gitee.com/Wcowin/homebrew-oneclip
 
 # 3. 升级到最新版本
 brew upgrade --cask oneclip
@@ -60,7 +61,7 @@ brew upgrade --cask oneclip
 
 ### 验证迁移成功
 ```bash
-# 查看 tap 源地址（应该显示 GitHub）
+# 查看 tap 源地址（应该显示 Gitee）
 brew tap-info wcowin/oneclip
 
 # 查看当前版本
@@ -100,10 +101,9 @@ OneClip 是一款专为 macOS 打造的专业级剪贴板管理工具，采用 1
 
 ## 🔗 相关链接
 
-- ** 官方网站**: [https://oneclip.cloud](https://oneclip.cloud/)
-- ** 源码仓库**: [https://github.com/Wcowin/OneClip](https://github.com/Wcowin/OneClip)
-- ** 直接下载**: [GitHub Releases](https://github.com/Wcowin/OneClip/releases)
-- ** QQ 群**: [1060157293](https://qm.qq.com/q/ckSQ6MXgLm)
+- **官方网站**: [https://oneclip.cloud](https://oneclip.cloud/)
+- **Gitee 仓库**: [https://gitee.com/Wcowin/homebrew-oneclip](https://gitee.com/Wcowin/homebrew-oneclip)
+- **QQ 群**: [1060157293](https://qm.qq.com/q/ckSQ6MXgLm)
 
 ## 问题反馈
 
@@ -114,7 +114,7 @@ OneClip 是一款专为 macOS 打造的专业级剪贴板管理工具，采用 1
 3. **重新安装**：`brew uninstall --cask oneclip && brew install --cask oneclip`
 4. **查看详细日志**：`brew install --cask oneclip --verbose`
 
-如果问题仍然存在，请在 [GitHub Issues](https://github.com/Wcowin/OneClip/issues) 反馈。
+如果问题仍然存在，请在 [Gitee Issues](https://gitee.com/Wcowin/homebrew-oneclip/issues) 反馈。
 
 ## 📊 使用统计
 

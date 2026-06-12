@@ -45,7 +45,7 @@ git commit -m "Update to v$VERSION
 - 更新 SHA256 校验和
 - 自动化发布脚本生成"
 
-echo "🚀 推送到 GitHub..."
+echo "🚀 推送到 Gitee..."
 
 # 尝试推送，如果失败则先拉取再推送
 if ! git push origin main 2>/dev/null; then
@@ -72,5 +72,5 @@ echo "✅ 更新完成！"
 echo ""
 echo "🧪 现在可以测试安装:"
 echo "   brew untap wcowin/oneclip"
-echo "   brew tap wcowin/oneclip"
+echo "   brew tap wcowin/oneclip https://gitee.com/Wcowin/homebrew-oneclip"
 echo "   brew install --cask oneclip"

@@ -88,7 +88,7 @@ CASK_FILE="$SCRIPT_DIR/Casks/oneclip.rb"
 mkdir -p "$SCRIPT_DIR/Casks"
 
 # 🔥 统一使用通用版本（支持所有架构）
-DMG_URL="https://github.com/Wcowin/OneClip/releases/download/#{version}/OneClip-#{version}.dmg"
+DMG_URL="https://gitee.com/Wcowin/OneClip/releases/download/#{version}/OneClip-#{version}.dmg"
 LIVECHECK_REGEX="/OneClip[._-]v?(\d+(?:\.\d+)+)\.dmg/i"
 ARCH_DEPENDS=""
 
@@ -104,7 +104,7 @@ cask "oneclip" do
   homepage "https://oneclip.cloud/"
 
   livecheck do
-    url "https://github.com/Wcowin/OneClip/releases"
+    url "https://gitee.com/Wcowin/OneClip/releases"
     regex($LIVECHECK_REGEX)
   end
 
@@ -127,11 +127,11 @@ EOF
 echo -e "${GREEN}✅ Cask 文件已更新: $CASK_FILE${NC}"
 echo ""
 
-# 步骤 5: 推送到 GitHub
-echo -e "${YELLOW}📋 步骤 5/5: 推送到 GitHub${NC}"
+# 步骤 5: 推送到 Gitee
+echo -e "${YELLOW}📋 步骤 5/5: 推送到 Gitee${NC}"
 
 # 检查是否需要推送
-read -p "是否推送到 GitHub homebrew-oneclip 仓库？(y/n) " -n 1 -r
+read -p "是否推送到 Gitee homebrew-oneclip 仓库？(y/n) " -n 1 -r
 echo ""
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
@@ -162,16 +162,16 @@ echo "   Cask: $CASK_FILE"
 echo ""
 echo -e "${BLUE}📋 接下来的步骤：${NC}"
 echo ""
-echo "1️⃣ 上传 DMG 到 GitHub Releases"
-echo "   URL: https://github.com/Wcowin/OneClip/releases"
-echo "   标签: v$VERSION"
+echo "1️⃣ 上传 DMG 到 Gitee Releases"
+echo "   URL: https://gitee.com/Wcowin/OneClip/releases"
+echo "   标签: $VERSION"
 echo "   文件: $(basename "$DMG_FILE")"
 echo ""
 echo "2️⃣ 测试安装"
-echo "   brew untap Wcowin/oneclip 2>/dev/null || true"
-echo "   brew tap Wcowin/oneclip"
+echo "   brew untap wcowin/oneclip 2>/dev/null || true"
+echo "   brew tap wcowin/oneclip https://gitee.com/Wcowin/homebrew-oneclip"
 echo "   brew install --cask oneclip"
 echo ""
 echo -e "${BLUE}👥 用户安装命令：${NC}"
-echo "   brew install --cask Wcowin/oneclip/oneclip"
+echo "   brew install --cask wcowin/oneclip/oneclip"
 echo ""
