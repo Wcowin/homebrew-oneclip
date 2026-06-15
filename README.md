@@ -39,18 +39,20 @@ brew upgrade --cask oneclip
 
 ### 方法一：自动切换（推荐）
 ```bash
-# 移除旧的 GitHub tap
-brew untap wcowin/oneclip
+# 1. 彻底移除旧的 GitHub tap（包括本地缓存）
+brew untap wcowin/oneclip 2>/dev/null || true
+rm -rf "$(brew --prefix)/Library/Taps/wcowin" 2>/dev/null || true
 
-# 重新添加 Gitee tap 并安装
+# 2. 重新添加 Gitee tap 并安装
 brew tap wcowin/oneclip https://gitee.com/Wcowin/homebrew-oneclip
 brew install --cask wcowin/oneclip/oneclip
 ```
 
 ### 方法二：手动切换
 ```bash
-# 1. 移除旧的 GitHub tap
-brew untap wcowin/oneclip
+# 1. 彻底移除旧的 GitHub tap
+brew untap wcowin/oneclip 2>/dev/null || true
+rm -rf "$(brew --prefix)/Library/Taps/wcowin" 2>/dev/null || true
 
 # 2. 添加新的 Gitee tap
 brew tap wcowin/oneclip https://gitee.com/Wcowin/homebrew-oneclip

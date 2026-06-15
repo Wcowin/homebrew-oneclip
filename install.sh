@@ -315,10 +315,12 @@ setup_tap() {
     if [[ "$TAP_INSTALLED" == "true" ]]; then
         print_substep "移除旧 Tap..."
         brew untap "$TAP_NAME" 2>/dev/null || true
+        # 强制清理残留目录，防止 remote mismatch
+        rm -rf "$(brew --prefix)/Library/Taps/wcowin" 2>/dev/null || true
     fi
     
     print_substep "添加 Tap..."
-    if brew tap "$TAP_NAME" 2>&1; then
+    if brew tap "$TAP_NAME" "https://gitee.com/Wcowin/homebrew-oneclip" 2>&1; then
         print_success "Tap 设置完成"
         TAP_INSTALLED=true
     else

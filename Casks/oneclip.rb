@@ -1,6 +1,6 @@
 cask "oneclip" do
-  version "1.6.0"
-  sha256 "0c85830b552855abbbdc199b2946eaa6e6cc36cea2e0146673b99d85ba368d6a"
+  version "1.6.1"
+  sha256 "e33111ab7e9910fafcaeb0592e89df6c76d73c1ecee94f18334b6cde48c3c5d5"
 
   url "https://gitee.com/Wcowin/OneClip/releases/download/#{version}/OneClip-#{version}.dmg"
   name "OneClip"
