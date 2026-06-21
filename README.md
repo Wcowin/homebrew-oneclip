@@ -106,6 +106,7 @@ OneClip 是一款专为 macOS 打造的专业级剪贴板管理工具，采用 1
 - **官方网站**: [https://oneclip.cloud](https://oneclip.cloud/)
 - **Gitee 仓库**: [https://gitee.com/Wcowin/homebrew-oneclip](https://gitee.com/Wcowin/homebrew-oneclip)
 - **QQ 群**: [1060157293](https://qm.qq.com/q/ckSQ6MXgLm)
+- **TG 群组**: [点击加入](https://t.me/+I7S6R0pw5180YzRl)
 
 ## 问题反馈
 
