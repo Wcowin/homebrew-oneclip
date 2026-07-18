@@ -9,6 +9,22 @@
 
 OneClip 的 Homebrew tap。GitHub 为主仓库，Gitee 为镜像；应用安装包主要从 Gitee 下载。
 
+## 🧰 维护仓库布局
+
+发布脚本默认按同级目录查找 OneClip 主项目：
+
+```text
+Pictures/
+├── OneClipPlusProMAX/
+└── homebrew-oneclip/
+```
+
+运行 `./brew_release.sh` 时，会从 `../OneClipPlusProMAX/version.txt` 和 `../OneClipPlusProMAX/dist/releases/` 读取版本与 DMG。其他目录布局可以显式指定：
+
+```bash
+ONECLIP_PROJECT_DIR=/path/to/OneClipPlusProMAX ./brew_release.sh
+```
+
 ## 🍺 安装
 
 ### 一键安装（推荐，GitHub 主源）
