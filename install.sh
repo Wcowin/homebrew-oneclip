@@ -4,7 +4,8 @@
 # OneClip Homebrew 安装/诊断/维护脚本
 # 
 # 用法: 
-#   curl -fsSL https://gitee.com/Wcowin/homebrew-oneclip/raw/master/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/Wcowin/homebrew-oneclip/main/install.sh | bash
+#   GitHub 不可用时：curl -fsSL https://gitee.com/Wcowin/homebrew-oneclip/raw/main/install.sh | bash
 #   或者: ./install.sh
 #
 # 功能:
@@ -25,8 +26,11 @@ set -e
 TAP_NAME="wcowin/oneclip"
 CASK_NAME="oneclip"
 APP_NAME="OneClip"
-GITEE_API="https://gitee.com/api/v5/repos/Wcowin"
-GITEE_RAW="https://gitee.com/Wcowin"
+TAP_PRIMARY_URL="https://github.com/Wcowin/homebrew-oneclip.git"
+TAP_MIRROR_URL="https://gitee.com/Wcowin/homebrew-oneclip.git"
+GITHUB_CASK_RAW="https://raw.githubusercontent.com/Wcowin/homebrew-oneclip/main/Casks/oneclip.rb"
+GITEE_CASK_RAW="https://gitee.com/Wcowin/homebrew-oneclip/raw/main/Casks/oneclip.rb"
+APP_RELEASE_BASE_URL="https://gitee.com/oneclip/OneClip"
 SUPPORT_EMAIL="vip@oneclip.cloud"
 WEBSITE="https://oneclip.cloud"
 
@@ -142,9 +146,14 @@ check_homebrew() {
 get_remote_version() {
     print_step "获取最新版本..."
     
-    # 从 Gitee 获取版本信息
-    REMOTE_VERSION=$(curl -sL --connect-timeout 5 "$GITEE_API/homebrew-oneclip/contents/Casks/oneclip.rb" 2>/dev/null | \
-        python3 -c "import json,sys,base64; d=json.load(sys.stdin); c=base64.b64decode(d['content']).decode(); print([l.split('\"')[1] for l in c.split('\n') if 'version' in l][0])" 2>/dev/null || echo "")
+    # GitHub 为主源，Gitee 为镜像回退
+    REMOTE_CASK=$(curl -fsSL --connect-timeout 5 --max-time 15 "$GITHUB_CASK_RAW" 2>/dev/null || true)
+    if [[ -z "$REMOTE_CASK" ]]; then
+        print_warning "GitHub 不可用，尝试 Gitee 镜像..."
+        REMOTE_CASK=$(curl -fsSL --connect-timeout 5 --max-time 15 "$GITEE_CASK_RAW" 2>/dev/null || true)
+    fi
+
+    REMOTE_VERSION=$(echo "$REMOTE_CASK" | sed -n 's/^[[:space:]]*version "\([^"]*\)".*/\1/p' | head -1)
     
     if [[ -z "$REMOTE_VERSION" ]]; then
         print_warning "无法获取（网络问题）"
@@ -166,6 +175,16 @@ check_tap() {
         # 检查更新时间
         TAP_PATH="$(brew --prefix)/Library/Taps/wcowin/homebrew-oneclip"
         if [[ -d "$TAP_PATH" ]]; then
+            TAP_REMOTE_URL=$(git -C "$TAP_PATH" config --get remote.origin.url 2>/dev/null || echo "")
+            if [[ "$TAP_REMOTE_URL" == "$TAP_PRIMARY_URL" || "$TAP_REMOTE_URL" == "git@github.com:Wcowin/homebrew-oneclip.git" ]]; then
+                print_info "Tap 来源: GitHub 主源"
+            elif [[ "$TAP_REMOTE_URL" == "$TAP_MIRROR_URL" || "$TAP_REMOTE_URL" == "https://gitee.com/Wcowin/homebrew-oneclip" ]]; then
+                print_warning "Tap 来源: Gitee 镜像"
+            else
+                print_warning "Tap 来源未知: ${TAP_REMOTE_URL:-未配置}"
+                ISSUES+=("tap_remote_unknown")
+            fi
+
             LAST_UPDATE=$(stat -f "%m" "$TAP_PATH" 2>/dev/null || echo "0")
             CURRENT_TIME=$(date +%s)
             DAYS_OLD=$(( (CURRENT_TIME - LAST_UPDATE) / 86400 ))
@@ -262,7 +281,7 @@ test_network() {
     
     # 测试下载地址
     if [[ -n "$REMOTE_VERSION" ]]; then
-        DOWNLOAD_URL="$GITEE_RAW/OneClip/releases/download/$REMOTE_VERSION/OneClip-$REMOTE_VERSION.dmg"
+        DOWNLOAD_URL="$APP_RELEASE_BASE_URL/releases/download/$REMOTE_VERSION/OneClip-$REMOTE_VERSION.dmg"
         HTTP_CODE=$(curl -sL --connect-timeout 5 -o /dev/null -w "%{http_code}" "$DOWNLOAD_URL" 2>/dev/null || echo "000")
         
         if [[ "$HTTP_CODE" == "302" ]] || [[ "$HTTP_CODE" == "200" ]]; then
@@ -315,16 +334,19 @@ setup_tap() {
     if [[ "$TAP_INSTALLED" == "true" ]]; then
         print_substep "移除旧 Tap..."
         brew untap "$TAP_NAME" 2>/dev/null || true
-        # 强制清理残留目录，防止 remote mismatch
-        rm -rf "$(brew --prefix)/Library/Taps/wcowin" 2>/dev/null || true
+        # 仅清理 OneClip Tap，避免影响同一账号下的其他 Tap
+        rm -rf "$(brew --prefix)/Library/Taps/wcowin/homebrew-oneclip" 2>/dev/null || true
     fi
     
-    print_substep "添加 Tap..."
-    if brew tap "$TAP_NAME" "https://gitee.com/Wcowin/homebrew-oneclip" 2>&1; then
-        print_success "Tap 设置完成"
+    print_substep "从 GitHub 主源添加 Tap..."
+    if brew tap "$TAP_NAME" "$TAP_PRIMARY_URL" 2>&1; then
+        print_success "Tap 设置完成（GitHub 主源）"
+        TAP_INSTALLED=true
+    elif brew tap "$TAP_NAME" "$TAP_MIRROR_URL" 2>&1; then
+        print_warning "GitHub 不可用，已切换到 Gitee 镜像"
         TAP_INSTALLED=true
     else
-        print_error "Tap 添加失败"
+        print_error "GitHub 与 Gitee Tap 均添加失败"
         return 1
     fi
 }
@@ -355,7 +377,9 @@ clean_cache() {
     print_step "刷新 Tap 缓存..."
     if [[ "$TAP_INSTALLED" == "true" ]]; then
         brew untap "$TAP_NAME" 2>/dev/null || true
-        brew tap "$TAP_NAME" 2>/dev/null || true
+        if ! brew tap "$TAP_NAME" "$TAP_PRIMARY_URL" 2>/dev/null; then
+            brew tap "$TAP_NAME" "$TAP_MIRROR_URL" 2>/dev/null || true
+        fi
     fi
     print_success "完成"
     

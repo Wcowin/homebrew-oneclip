@@ -4,6 +4,7 @@
 # 功能：自动化完成 Homebrew Cask 的更新和发布
 
 set -e
+set -o pipefail
 
 # 颜色定义
 GREEN='\033[0;32m'
@@ -21,7 +22,7 @@ echo "===================================="
 echo ""
 
 # 步骤 1: 读取版本号
-echo -e "${YELLOW}📋 步骤 1/5: 读取版本信息${NC}"
+echo -e "${YELLOW}📋 步骤 1/6: 读取版本信息${NC}"
 
 if [[ ! -f "$PROJECT_DIR/version.txt" ]]; then
     echo -e "${RED}❌ 未找到版本文件: $PROJECT_DIR/version.txt${NC}"
@@ -33,7 +34,7 @@ echo -e "${GREEN}✅ 当前版本: $VERSION${NC}"
 echo ""
 
 # 步骤 2: 查找 DMG 文件
-echo -e "${YELLOW}📋 步骤 2/5: 查找 DMG 文件${NC}"
+echo -e "${YELLOW}📋 步骤 2/6: 查找 DMG 文件${NC}"
 
 # 🔥 智能查找 DMG 文件（支持多架构）
 RELEASE_DIR="$PROJECT_DIR/dist/releases/$VERSION"
@@ -73,14 +74,14 @@ echo "   大小: $DMG_SIZE"
 echo ""
 
 # 步骤 3: 计算 SHA256
-echo -e "${YELLOW}📋 步骤 3/5: 计算 SHA256 校验和${NC}"
+echo -e "${YELLOW}📋 步骤 3/6: 计算 SHA256 校验和${NC}"
 
 SHA256=$(shasum -a 256 "$DMG_FILE" | cut -d' ' -f1)
 echo -e "${GREEN}✅ SHA256: $SHA256${NC}"
 echo ""
 
 # 步骤 4: 更新 Cask 文件
-echo -e "${YELLOW}📋 步骤 4/5: 更新 Cask 文件${NC}"
+echo -e "${YELLOW}📋 步骤 4/6: 更新 Cask 文件${NC}"
 
 CASK_FILE="$SCRIPT_DIR/Casks/oneclip.rb"
 
@@ -88,9 +89,9 @@ CASK_FILE="$SCRIPT_DIR/Casks/oneclip.rb"
 mkdir -p "$SCRIPT_DIR/Casks"
 
 # 🔥 统一使用通用版本（支持所有架构）
-DMG_URL="https://gitee.com/Wcowin/OneClip/releases/download/#{version}/OneClip-#{version}.dmg"
+DMG_URL="https://gitee.com/oneclip/OneClip/releases/download/#{version}/OneClip-#{version}.dmg"
+DMG_VERIFIED="gitee.com/oneclip/OneClip/"
 LIVECHECK_REGEX="/OneClip[._-]v?(\d+(?:\.\d+)+)\.dmg/i"
-ARCH_DEPENDS=""
 
 # 生成 Cask 文件
 cat > "$CASK_FILE" << EOF
@@ -98,18 +99,18 @@ cask "oneclip" do
   version "$VERSION"
   sha256 "$SHA256"
 
-  url "$DMG_URL"
+  url "$DMG_URL",
+      verified: "$DMG_VERIFIED"
   name "OneClip"
-  desc "Professional clipboard manager for macOS"
+  desc "Professional clipboard manager"
   homepage "https://oneclip.cloud/"
 
   livecheck do
-    url "https://gitee.com/Wcowin/OneClip/releases"
+    url "https://gitee.com/oneclip/OneClip/releases"
     regex($LIVECHECK_REGEX)
   end
 
   depends_on macos: :monterey
-$ARCH_DEPENDS
 
   app "OneClip.app"
 
@@ -127,14 +128,46 @@ EOF
 echo -e "${GREEN}✅ Cask 文件已更新: $CASK_FILE${NC}"
 echo ""
 
-# 步骤 5: 推送到 Gitee + GitHub
-echo -e "${YELLOW}📋 步骤 5/5: 推送到 Gitee + GitHub${NC}"
+# 步骤 5: 验证线上 DMG
+echo -e "${YELLOW}📋 步骤 5/6: 验证线上 DMG${NC}"
 
-# 检查是否需要推送
-read -p "是否推送到 Gitee + GitHub？(y/n) " -n 1 -r
+DMG_DOWNLOAD_URL="https://gitee.com/oneclip/OneClip/releases/download/$VERSION/OneClip-$VERSION.dmg"
+
+echo "请先将 DMG 上传到 Gitee Releases："
+echo "   URL: https://gitee.com/oneclip/OneClip/releases"
+echo "   标签: $VERSION"
+echo "   文件: $(basename "$DMG_FILE")"
+echo ""
+read -p "DMG 是否已上传？现在验证线上文件 (y/n) " -n 1 -r UPLOAD_REPLY
 echo ""
 
-if [[ $REPLY =~ ^[Yy]$ ]]; then
+if [[ ! $UPLOAD_REPLY =~ ^[Yy]$ ]]; then
+    echo "⏭️  已停止：Cask 已生成，但尚未提交或推送"
+    exit 0
+fi
+
+echo "🔍 下载线上 DMG 并校验 SHA256..."
+REMOTE_SHA256=$(curl -fsSL --max-time 180 "$DMG_DOWNLOAD_URL" | shasum -a 256 | cut -d' ' -f1)
+
+if [[ "$REMOTE_SHA256" != "$SHA256" ]]; then
+    echo -e "${RED}❌ 线上 DMG 的 SHA256 与本地文件不一致${NC}"
+    echo "   本地: $SHA256"
+    echo "   线上: $REMOTE_SHA256"
+    exit 1
+fi
+
+echo -e "${GREEN}✅ 线上 DMG 可访问且 SHA256 一致${NC}"
+echo ""
+
+# 步骤 6: 推送到 GitHub + Gitee
+echo -e "${YELLOW}📋 步骤 6/6: 推送到 GitHub + Gitee${NC}"
+
+# 检查是否需要推送
+read -p "是否先推送 GitHub、再同步 Gitee？(y/n) " -n 1 -r PUSH_REPLY
+echo ""
+
+PUSHED=false
+if [[ $PUSH_REPLY =~ ^[Yy]$ ]]; then
     echo "🚀 开始推送..."
     
     if [[ -f "$SCRIPT_DIR/update_tap.sh" ]]; then
@@ -144,6 +177,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
         exit 1
     fi
     
+    PUSHED=true
     echo -e "${GREEN}✅ 推送完成${NC}"
 else
     echo "⏭️  跳过推送"
@@ -162,20 +196,23 @@ echo "   Cask: $CASK_FILE"
 echo ""
 echo -e "${BLUE}📋 接下来的步骤：${NC}"
 echo ""
-echo "1️⃣ 上传 DMG 到 Gitee Releases"
-echo "   URL: https://gitee.com/Wcowin/OneClip/releases"
-echo "   标签: $VERSION"
-echo "   文件: $(basename "$DMG_FILE")"
+echo "1️⃣ 将 DMG/ZIP 同步到 GitHub Releases（公开镜像）"
+echo "   URL: https://github.com/One-Clip/OneClip/releases"
 echo ""
 echo "2️⃣ 测试安装"
 echo "   brew untap wcowin/oneclip 2>/dev/null || true"
-echo "   brew tap wcowin/oneclip https://gitee.com/Wcowin/homebrew-oneclip"
+echo "   brew tap wcowin/oneclip https://github.com/Wcowin/homebrew-oneclip.git"
 echo "   brew install --cask oneclip"
 echo ""
 echo -e "${BLUE}👥 用户安装命令：${NC}"
 echo "   brew install --cask wcowin/oneclip/oneclip"
 echo ""
 echo -e "${BLUE}📦 同步状态：${NC}"
-echo "   Gitee:  ✅ 已推送 (origin)"
-echo "   GitHub: ✅ 已推送 (github)"
+if [[ "$PUSHED" == "true" ]]; then
+    echo "   GitHub: ✅ 已推送 (origin)"
+    echo "   Gitee:  ✅ 已同步 (gitee)"
+else
+    echo "   GitHub: ⏭️ 未推送"
+    echo "   Gitee:  ⏭️ 未推送"
+fi
 echo ""
