@@ -67,6 +67,19 @@ if ! git push origin main 2>/dev/null; then
     git push origin main
 fi
 
+# 同步推送到 GitHub
+echo "🚀 同步推送到 GitHub..."
+if git remote | grep -q "github"; then
+    if ! git push github main 2>/dev/null; then
+        echo "⚠️  GitHub 推送失败，尝试拉取远程更改..."
+        git pull github main --no-rebase --no-edit 2>/dev/null || true
+        git push github main
+    fi
+    echo "✅ GitHub 同步完成"
+else
+    echo "ℹ️  未配置 GitHub remote，跳过"
+fi
+
 echo "✅ 更新完成！"
 
 echo ""

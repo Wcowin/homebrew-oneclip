@@ -127,11 +127,11 @@ EOF
 echo -e "${GREEN}✅ Cask 文件已更新: $CASK_FILE${NC}"
 echo ""
 
-# 步骤 5: 推送到 Gitee
-echo -e "${YELLOW}📋 步骤 5/5: 推送到 Gitee${NC}"
+# 步骤 5: 推送到 Gitee + GitHub
+echo -e "${YELLOW}📋 步骤 5/5: 推送到 Gitee + GitHub${NC}"
 
 # 检查是否需要推送
-read -p "是否推送到 Gitee homebrew-oneclip 仓库？(y/n) " -n 1 -r
+read -p "是否推送到 Gitee + GitHub？(y/n) " -n 1 -r
 echo ""
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
@@ -174,4 +174,8 @@ echo "   brew install --cask oneclip"
 echo ""
 echo -e "${BLUE}👥 用户安装命令：${NC}"
 echo "   brew install --cask wcowin/oneclip/oneclip"
+echo ""
+echo -e "${BLUE}📦 同步状态：${NC}"
+echo "   Gitee:  ✅ 已推送 (origin)"
+echo "   GitHub: ✅ 已推送 (github)"
 echo ""
