@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
   "model_id": "oneclip-ppocrv5-mobile",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "published_at": "2026-07-19",
   "minimum_app_version": "2.0.1",
-  "archive_name": "oneclip_ocr_models_v5_5.0.0.zip",
-  "archive_size": 19142700,
-  "archive_sha256": "8a5e7d6efdb9cc308d12f575fa5f9ce52cbba7b4ddea0912776a09d028c3aee7",
-  "package_manifest_sha256": "d81a2eba656e4c6c3ee0cecbbeb559dc239336e8bec627025e795ec1fd5d9bfe",
+  "archive_name": "oneclip_ocr_models_v5_5.0.1.zip",
+  "archive_size": 19189141,
+  "archive_sha256": "611b9ab240648533e1449ab8908bffef43dd362a7e16970f3bc0b8aa804fee59",
+  "package_manifest_sha256": "c1c51264adb5c70323be166aaddba66f1726b4ab60e9f9f4cb700df81a5f8fc8",
   "download_urls": [
-    "https://gitee.com/Wcowin/homebrew-oneclip/releases/download/ocr-v5.0.0/oneclip_ocr_models_v5_5.0.0.zip",
-    "https://github.com/Wcowin/homebrew-oneclip/releases/download/ocr-v5.0.0/oneclip_ocr_models_v5_5.0.0.zip"
+    "https://gitee.com/Wcowin/homebrew-oneclip/releases/download/ocr-v5.0.1/oneclip_ocr_models_v5_5.0.1.zip",
+    "https://github.com/Wcowin/homebrew-oneclip/releases/download/ocr-v5.0.1/oneclip_ocr_models_v5_5.0.1.zip"
   ],
   "release_notes": "PP-OCRv5 mobile detection and recognition models for OneClip high-precision offline OCR."
 }
