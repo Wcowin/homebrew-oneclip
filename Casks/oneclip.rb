@@ -1,6 +1,6 @@
 cask "oneclip" do
-  version "2.0.2"
-  sha256 "07b6b48c393d8261fd9db44f35c24012c82fbfd36ab55a157155b57c21da2959"
+  version "2.0.3"
+  sha256 "48fd68788af9b620c0705e39b33c87b842052df1651af83d0f639b17675a989e"
 
   url "https://gitee.com/oneclip/OneClip/releases/download/#{version}/OneClip-#{version}.dmg",
       verified: "gitee.com/oneclip/OneClip/"
