@@ -2,8 +2,7 @@ cask "oneclip" do
   version "2.1.0"
   sha256 "2f754c9c62e8a203ad9d52e44a5abd3a443fbd78d61066dd916b62c15ad7b821"
 
-  url "https://gitee.com/oneclip/OneClip/releases/download/#{version}/OneClip-#{version}.dmg",
-      verified: "gitee.com/oneclip/OneClip/"
+  url "https://gitee.com/oneclip/OneClip/releases/download/#{version}/OneClip-#{version}.dmg"
   name "OneClip"
   desc "Professional clipboard manager"
   homepage "https://oneclip.cloud/"

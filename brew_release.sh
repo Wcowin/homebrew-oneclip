@@ -100,7 +100,6 @@ mkdir -p "$SCRIPT_DIR/Casks"
 
 # 🔥 统一使用通用版本（支持所有架构）
 DMG_URL="https://gitee.com/oneclip/OneClip/releases/download/#{version}/OneClip-#{version}.dmg"
-DMG_VERIFIED="gitee.com/oneclip/OneClip/"
 LIVECHECK_REGEX="/OneClip[._-]v?(\d+(?:\.\d+)+)\.dmg/i"
 
 # 生成 Cask 文件
@@ -109,8 +108,7 @@ cask "oneclip" do
   version "$VERSION"
   sha256 "$SHA256"
 
-  url "$DMG_URL",
-      verified: "$DMG_VERIFIED"
+  url "$DMG_URL"
   name "OneClip"
   desc "Professional clipboard manager"
   homepage "https://oneclip.cloud/"
